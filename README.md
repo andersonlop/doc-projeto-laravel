@@ -212,5 +212,170 @@ Ajuste seu projeto de forma que consiga renderizar todas as imagens, css, javasc
 
 ## 1 - Criando o Model
 
+#### Exemplo:
 ```
+php artisan make:model Produto -m
+```
+
+## 2 - Criando a migrate(banco de dados)
+
+#### Exemplo:
+```
+$table->id();
+            $table->Biginteger('status_id')->unsigned();
+            $table->foreign('status_id')->references('id')->on('statuses');
+
+            $table->BigInteger('categoria_id')->nullable()->unsigned();
+            $table->foreign('categoria_id')->references('id')->on('categorias');
+
+            $table->string('nome', 100);
+            $table->string('gtin', 20)->nullable();
+            $table->string('sku', 80)->nullable();
+            $table->string('imagem', 100)->nullable();
+
+            $table->string('codigo_barra', 60)->nullable();
+            $table->string('unidade', 20);
+            $table->string('usa_grade', 1)->default('N');
+            $table->string('eh_produto', 1)->default('N');
+            $table->string('eh_insumo', 1)->default('N');
+
+            $table->decimal('preco_venda', 10,2);
+            $table->decimal('preco_custo', 10,2)->nullable()->default(0);
+            $table->decimal('margem_lucro', 10,2)->nullable()->default(0);
+
+            $table->decimal('estoque_minimo', 10,2)->nullable()->default(0);
+            $table->decimal('estoque_maximo', 10,2)->nullable()->default(0);
+            $table->decimal('estoque_inicial', 10,2)->nullable()->default(0);
+            $table->integer('estoque_atual')->nullable()->default(0);
+
+
+            $table->string('ncm', 13);
+            $table->string('cest', 7)->nullable();
+            $table->timestamps();
+```
+
+## 3 - Criando a fillable (Atributos da tabela, ou seja, os campos) - coloca dentro do model
+
+#### Exemplo:
+```
+protected $fillable=[
+        "id", "status_id", "categoria_id", "codigo_barra",
+        "nome","gtin","imagem","origem","unidade","preco_venda",
+        "preco_custo", "margem_lucro","estoque_minimo","estoque_maximo",
+        "estoque_reservado", "estoque_inicial","estoque_atual","ncm",
+        "cest","usa_grade","sku","eh_produto","eh_insumo"
+    ];		
+```
+
+## 4 - Criando ProdutoSeeder - Caso queira popular automaticamente a tabela	
+
+#### Exemplo:
+```
+php artisan make:seed ProdutoSeeder
+```
+
+### Populando a tabela - Coloca dentro do ProdutoSeeder
+
+#### Exemplo:
+```
+ Produto::Create([
+	  'id'=>8, 
+	  'status_id'=> 1,
+	  'categoria_id' =>1,
+	  'unidade' => 'UNID',
+	  'nome'=> 'Panela 5',
+	  'eh_produto'=> 'S',
+	  'eh_insumo' => 'N',
+	  'preco_venda'=>'100.00',
+	  'preco_custo'=>'50.00',
+	  'imagem'=> 'upload/produtos/PANELA_5.jpg',
+	  'gtin'=> 'SEM GTIN',
+	  'ncm'=> '85167910', 
+	  'estoque_minimo'=> 10
+	  ]);
+```
+
+## 5 - Criando Relacionamento(caso precise) - Coloca na model
+
+#### Exemplo:
+```
+public function status()
+{
+    return $this->belongsTo(Status::class);
+}
+public function categoria()
+{
+    return $this->belongsTo(Categoria::class);
+}
+```
+
+#### Vai dentro de Model e abra o arquivo Status.php, o mesmo faz dentro de Model e abra o arquivo Categoria.php
+```
+public function produtos()
+{
+    return $this->hasMany(Produto::class);
+}
+```
+
+## 6 - Incluindo na "DatabaseSeeder"
+
+#### Exemplo:
+```
+ProdutoSeeder::class,
+```
+
+## 7 - Executando a migrate
+
+#### Exemplo:
+```
+php artisan migrate:fresh --seed
+```
+
+## 8 - Criar o controller
+
+#### Exemplo:
+```
+php artisan make:controller \Cadastro\ProdutoController -r
+```
+
+## 9 - Colocando método index no controller
+
+#### Exemplo:
+```
+public function index()
+    {
+        $dados["lista"] = Produto::get();
+        return View("Cadastro.Produto.Index", $dados);
+    }
+```
+
+## 10 - Criando a rota	
+
+#### Exemplo:
+```
+Route::resource("/produto", ProdutoController::class);
+```
+
+## 11 - Chamando a rota no menu
+
+#### Exemplo:
+```
+<li><a href="{{ route('produto.index') }}">Lista de produto</a></li>
+<li><a href="{{ route('produto.create') }}">Cadastro de produto</a></li>
+```
+
+## 12 - Criando a view
+
+#### 1ª - Dentro da pasta resources/view crie uma pasta chamada de Cadastro e dentro de Cadastro crie uma outra chamada de Produto e dentro da pasta Produto crie um arquivo chamado Index.blade.php
+		  
+		  
+#### Copie o conteúdo do arquivo lst_produto para o arquivo Cadastro/Produto/Index.blade.php, não esqueça envolvê-lo pelos comandos: Exemplo:
+```
+@extends('template')
+@section('conteudo')
+
+//aqui fica o conteúdo do arquivo
+
+@endsection	
+			
 ```
