@@ -208,7 +208,7 @@ Modifique o arquivo template implementando o código acima.
 Ajuste seu projeto de forma que consiga renderizar todas as imagens, css, javascript e em seguida execute.
 
 
-# CRIANDO O FORMULÁRIO
+# CRIANDO O FORMULÁRIO COM RELACIONAMENTO
 
 ## 1 - Criando o Model
 
@@ -378,53 +378,4 @@ Route::resource("/produto", ProdutoController::class);
 
 @endsection	
 			
-```
-
-## 13 - 
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
-```
-
-##
-
-#### Exemplo:
-
-```
 ```
