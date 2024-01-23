@@ -379,3 +379,52 @@ Route::resource("/produto", ProdutoController::class);
 @endsection	
 			
 ```
+
+## 13 - 
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
+
+##
+
+#### Exemplo:
+
+```
+```
